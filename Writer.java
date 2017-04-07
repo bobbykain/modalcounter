@@ -7,6 +7,8 @@ class Writer
   {
 
   }
+
+  //method for user to enter notes they want to play
   public char[] writeString()
   {
     System.out.println("Please input a string of notes (A-G)");

@@ -1,6 +1,6 @@
 import java.io.*;
 
-
+//main class to run
 class Modal
 {
   public static void main(String[] args)
@@ -17,8 +17,5 @@ class Modal
     r.playNotes(line2);
 
     r.playNotes(line1,line2);
-
-
-
   }
 }

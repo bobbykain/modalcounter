@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.IOException;
 
@@ -13,23 +11,12 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- * This is an example program that demonstrates how to play back an audio file
- * using the Clip in Java Sound API.
- * @author www.codejava.net
- *
- */
+
 public class Player implements LineListener {
 
-    /**
-     * this flag indicates whether the playback completes or not.
-     */
     boolean playCompleted;
 
-    /**
-     * Play a given audio file.
-     * @param audioFilePath Path of the audio file.
-     */
+    //play a single audio file
     void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
 
@@ -80,6 +67,8 @@ public class Player implements LineListener {
         }
 
     }
+
+    //overridden play method to play a chord
     void play(String audioFilePath, String audioFilePath1) {
         File audioFile = new File(audioFilePath);
         File audioFile1 = new File(audioFilePath1);
@@ -141,9 +130,6 @@ public class Player implements LineListener {
 
     }
 
-    /**
-     * Listens to the START and STOP events of the audio line.
-     */
     @Override
     public void update(LineEvent event) {
         LineEvent.Type type = event.getType();
