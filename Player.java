@@ -13,27 +13,15 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- * This is an example program that demonstrates how to play back an audio file
- * using the Clip in Java Sound API.
- * @author www.codejava.net
- *
- */
 public class Player implements LineListener {
 
-    /**
-     * this flag indicates whether the playback completes or not.
-     */
-    boolean playCompleted;
+    boolean playCompleted;//this variable is pretty never used within the code except in the overided update method
 
-    /**
-     * Play a given audio file.
-     * @param audioFilePath Path of the audio file.
-     */
-    void play(String audioFilePath) {
+    void play(String audioFilePath) {//method used in the even of one melody
         File audioFile = new File(audioFilePath);
 
         try {
+            //we begin by making an audio stream and then making a clip from that which will play our wav file
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
             AudioFormat format = audioStream.getFormat();
@@ -48,6 +36,8 @@ public class Player implements LineListener {
 
             audioClip.start();
 
+
+
             int n = 1;
 
             while(n == 1)
@@ -55,7 +45,8 @@ public class Player implements LineListener {
               audioClip.start();
 
               try {
-                  Thread.sleep(450);
+                  Thread.sleep(450);/**cause the wav file to play for exactly .45 seconds which was found to be a good
+                  eighth note timing*/
               } catch (InterruptedException ex) {
                   ex.printStackTrace();
               }
@@ -69,7 +60,7 @@ public class Player implements LineListener {
             audioClip.close();
 
         } catch (UnsupportedAudioFileException ex) {
-            System.out.println("The specified audio file is not supported.");
+            System.out.println("The specified audio file is not supported.");//checking for various errors regarding the wav files
             ex.printStackTrace();
         } catch (LineUnavailableException ex) {
             System.out.println("Audio line for playing back is unavailable.");
@@ -80,9 +71,11 @@ public class Player implements LineListener {
         }
 
     }
-    void play(String audioFilePath, String audioFilePath1) {
+    void play(String audioFilePath, String audioFilePath1) {//similar version which is able to play two melodies at a time
         File audioFile = new File(audioFilePath);
         File audioFile1 = new File(audioFilePath1);
+
+        //almost the exact same method except everything is done twice for each of the melodies
 
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -140,20 +133,15 @@ public class Player implements LineListener {
         }
 
     }
-
-    /**
-     * Listens to the START and STOP events of the audio line.
-     */
     @Override
-    public void update(LineEvent event) {
+    public void update(LineEvent event) {/**overidden update method. in order to play wav files LineListener must be implemented
+      however all the update is an abstract method in LineListener so it must be overidden for this to work*/
         LineEvent.Type type = event.getType();
 
         if (type == LineEvent.Type.START) {
-            System.out.println("Playback started.");
 
         } else if (type == LineEvent.Type.STOP) {
             playCompleted = true;
-            System.out.println("Playback completed.");
         }
 
     }

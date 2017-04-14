@@ -15,6 +15,7 @@ class Reader
     {
       playit.play("PianoSounds/" + notes[k] + ".wav");
     }
+    System.out.println("Melody Complete");
   }
 
   public void playNotes(String[] notes, String[] notes1)
@@ -25,5 +26,6 @@ class Reader
     {
       playit.play("PianoSounds/" + notes[k] + ".wav","PianoSounds/" + notes1[k] + ".wav");
     }
+    System.out.println("Melodies Complete");
   }
 }
