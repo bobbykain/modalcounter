@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.Scanner.*;
+
 
 class Reader
 {
@@ -7,24 +7,23 @@ class Reader
   {
 
   }
-  //play notes for user
-  public void playNotes(char[] notes)
+  public void playNotes(String[] notes)
   {
     Player playit = new Player();
     int n = notes.length;
     for(int k = 0; k < n; k++)
     {
-      playit.play(notes[k] + ".wav");
+      playit.play("PianoSounds/" + notes[k] + ".wav");
     }
   }
-  // play chords for user
-  public void playNotes(char[] notes, char[] notes1)
+
+  public void playNotes(String[] notes, String[] notes1)
   {
     Player playit = new Player();
     int n = notes.length;
     for(int k = 0; k < n; k++)
     {
-      playit.play(notes[k] + ".wav",notes1[k] + ".wav");
+      playit.play("PianoSounds/" + notes[k] + ".wav","PianoSounds/" + notes1[k] + ".wav");
     }
   }
 }

@@ -7,14 +7,9 @@ class Writer
   {
 
   }
-
-  //method for user to enter notes they want to play
-  public char[] writeString()
+  public String[] writeString(String notes)
   {
-    System.out.println("Please input a string of notes (A-G)");
-    Scanner keyboard = new Scanner(System.in);
-    String notes = keyboard.nextLine();
-    char[] pitch = notes.toCharArray();
+    String[] pitch = notes.split(" ");
     return pitch;
 
   }
