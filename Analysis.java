@@ -10,6 +10,8 @@ public class Analysis
   {
 
   }
+  /* the purpose of this method is to make calls to everysingle other method and make a huge sting of comments
+  which will be shown within the Gui*/
   public String printScore(String[] a, String[] b)
   {
     String comscore = "";
@@ -22,6 +24,7 @@ public class Analysis
     score = 0;
     return comscore;
   }
+  //converts the String[] into int[] making the math that must be done quite a lot easier to write code for.
   public int[] convert(String[] notes)
   {
     numarr = new int[notes.length];
@@ -48,6 +51,8 @@ public class Analysis
     return numarr;
 
   }
+  //checks the amount of distance between the intervals to ensure that the composer is not breaking the rules of
+  //first species modal conterpoint.
   public String checkintervals(int[] a, int[] b)
   {
     String comments = "";
@@ -97,6 +102,7 @@ public class Analysis
     }
     return comments;
   }
+  //checks the ratio of leaps to steps
   public String checkleaps(int[] a)
   {
     int leaps = 0;
@@ -131,6 +137,8 @@ public class Analysis
 
     }
   }
+
+  //checks for parrallel octave, fifths and unisons.
   public String checkpar(int[] a, int[] b)
   {
     String comments = "";

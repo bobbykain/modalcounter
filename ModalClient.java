@@ -36,7 +36,7 @@ public class ModalClient
 
 		try
 		{
-			hostname = "192.168.1.36";
+			hostname = "localhost";
 			port = 7654;
 			connectionSock = new Socket(hostname, port);
 			serverOutput = new DataOutputStream(connectionSock.getOutputStream());
