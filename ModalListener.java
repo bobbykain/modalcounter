@@ -49,10 +49,21 @@ public class ModalListener implements Runnable
 					if(melody2.length != 0)//this checks to see if there has only been one melody put in or if there are now two
 					{
 						r.playNotes(melody1,melody2);
+						Analysis a = new Analysis();
+						int[] nummel1 = a.convert(melody1);
+						int[] nummel2 = a.convert(melody2);
+						a.checkintervals(nummel1,nummel2);
+						a.checkleaps(nummel1);
+						a.checkpar(nummel1, nummel2);
+						a.printScore();
 					}
 					else
 					{
 						r.playNotes(melody1);
+						Analysis a = new Analysis();
+						int[] nummel1 = a.convert(melody1);
+						a.checkleaps(nummel1);
+						a.printScore();
 					}
 					melody2 = melody1;//now the melody which  was used to harmonize the first melody will also be harmonized
 
