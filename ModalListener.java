@@ -28,6 +28,15 @@ public class ModalListener implements Runnable
 		this.connectionSock = sock;
 	}
 
+	public String[] getMelody1()
+	{
+		return melody1;
+	}
+	public String[] getMelody2()
+	{
+		return melody2;
+	}
+
 	public void run()
 	{
        		 // Wait for data from the server.  If received, output it.
@@ -45,25 +54,17 @@ public class ModalListener implements Runnable
 					System.out.println(serverText);
 					Writer w = new Writer();
 					melody1 = w.writeString(serverText);
+					Musicgui.previous = melody1;
 					Reader r = new Reader();
 					if(melody2.length != 0)//this checks to see if there has only been one melody put in or if there are now two
 					{
 						r.playNotes(melody1,melody2);
 						Analysis a = new Analysis();
-						int[] nummel1 = a.convert(melody1);
-						int[] nummel2 = a.convert(melody2);
-						a.checkintervals(nummel1,nummel2);
-						a.checkleaps(nummel1);
-						a.checkpar(nummel1, nummel2);
-						a.printScore();
+						Musicgui.messenger = a.printScore(melody1, melody2);
 					}
 					else
 					{
 						r.playNotes(melody1);
-						Analysis a = new Analysis();
-						int[] nummel1 = a.convert(melody1);
-						a.checkleaps(nummel1);
-						a.printScore();
 					}
 					melody2 = melody1;//now the melody which  was used to harmonize the first melody will also be harmonized
 

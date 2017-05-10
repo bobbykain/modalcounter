@@ -14,22 +14,30 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import java.net.Socket;
 
-public class javafxtest extends Application implements EventHandler<ActionEvent>
+public class Musicgui extends Application implements EventHandler<ActionEvent>
 {
   Stage window;
   Button button;
   double x = 0;
   double y = 0;
-  String[] previous = new String[16];
+  public static String[] previous = new String[16];
   String[] current = new String[16];
   char octave = '1';
   int index = 0;
-  String messenger = "";
+  public static String messenger = "";
+  boolean ready = false;
+  ModalClient client = new ModalClient();
+  ModalListener listener;
 
   public static void main(String[] args)
   {
+
+
     launch(args);
+
+
   }
 
   @Override
@@ -37,7 +45,7 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
   {
     for(int i = 0; i < 16;i++)
     {
-      previous[i] = "i";
+      previous[i] = " ";
       current[i] = " ";
     }
     Image image = new Image(new FileInputStream("../modalcounter/background.png"));
@@ -60,7 +68,7 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
     currentText.setY(461);
 
     Text message = new Text();
-    message.setFont(Font.font("times", FontWeight.BOLD, FontPosture.REGULAR, 20));
+    message.setFont(Font.font("times", FontWeight.BOLD, FontPosture.REGULAR, 15));
     message.setText(messenger);
     message.setX(30);
     message.setY(500);
@@ -78,6 +86,11 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
     layout.getChildren().add(button);
     Scene scene = new Scene(root, 1000, 800);
 
+    Socket connectionSock = client.getSocket();
+    listener = new ModalListener(connectionSock);
+    Thread theThread = new Thread(listener);
+    theThread.start();
+
 
     imageView.setOnMouseClicked(e -> {
     System.out.println("["+e.getX()+", "+e.getY()+"]");
@@ -85,9 +98,9 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
     y = e.getY();
     selector(x,y);
     String currentString1 = String.join("-", current);
-    currentText.setText(currentString1);
-    String previousString1 = String.join("-", current);
+    String previousString1 = String.join("-", previous);
     previousText.setText(previousString1);
+    currentText.setText(currentString1);
     message.setText(messenger);
 
 
@@ -103,10 +116,19 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
   {
 
   }
+  public String getCurrent()
+  {
+    String currentString = String.join(" ", current);
+    return currentString;
+  }
   public void selector(double x, double y)
   {
     //buttons
-    if ((x > 825 && x < 950) && (y > 425 && y < 550))
+    if(index == 0)
+    {
+
+    }
+    else if ((x > 825 && x < 950) && (y > 425 && y < 550))
     {
       System.out.println("Back pressed");
       index--;
@@ -115,18 +137,12 @@ public class javafxtest extends Application implements EventHandler<ActionEvent>
     if ((x > 825 && x < 950) && (y > 550 && y < 700))
     {
       System.out.println("Play pressed");
-      if(index != 15)
-      {
-        System.out.println("Melody not long enough.");
-      }
-      else
-      {
-
-      }
+      String currentString = String.join(" ", current);
+      client.sendinfo(currentString);
     }
     if(index > 15)
     {
-      messenger = "You can't add anymore notes";
+
     }
     //notes
     else if ((x > 140 && x < 175) && (y > 100 && y < 200))

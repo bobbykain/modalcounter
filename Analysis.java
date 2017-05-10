@@ -10,10 +10,17 @@ public class Analysis
   {
 
   }
-  public void printScore()
+  public String printScore(String[] a, String[] b)
   {
-    System.out.println("You got a score of " + score);
+    String comscore = "";
+    int[] num1 = convert(a);
+    int[] num2 = convert(b);
+    comscore += checkintervals(num1,num2);
+    comscore += checkpar(num1, num2);
+    comscore += checkleaps(num1) + "\n";
+    comscore += "You got a score of " + score;
     score = 0;
+    return comscore;
   }
   public int[] convert(String[] notes)
   {
@@ -41,54 +48,56 @@ public class Analysis
     return numarr;
 
   }
-  public int checkintervals(int[] a, int[] b)
+  public String checkintervals(int[] a, int[] b)
   {
+    String comments = "";
     for(int i = 0; i < a.length; i++)
     {
       int interval = Math.abs(a[i] - b[i]);
       if(interval == 1)
       {
-        System.out.println("There is a minor second at position " + i);
         score--;
+        comments += ("There is a minor second at position " + i + "\n");
       }
       else if(interval == 2)
       {
-        System.out.println("There is a major second at position " + i);
+        comments += ("There is a major second at position " + i + "\n");
         score--;
       }
       else if(interval == 5)
       {
-        System.out.println("There is a perect fourth at position " + i);
+        comments += ("There is a perect fourth at position " + i + "\n");
         score--;
       }
       else if(interval == 6)
       {
-        System.out.println("There is a tritone at position " + i);
+        comments += ("There is a tritone at position " + i + "\n");
         score = score - 2;
       }
       else if(interval == 10)
       {
-        System.out.println("There is a minor seventh at position " + i);
+        comments += ("There is a minor seventh at position " + i + "\n");
         score--;
       }
       else if(interval == 11)
       {
-        System.out.println("There is a major seventh at position " + i);
+        comments += ("There is a major seventh at position " + i + "\n");
         score--;
       }
       else if(interval > 16)
       {
-        System.out.println("There is an interval that is greater than a 10th at position" + i);
+        comments += ("There is an interval that is greater than a 10th at position " + i + "\n");
         score--;
       }
       else
       {
         score++;
       }
+
     }
-    return score;
+    return comments;
   }
-  public void checkleaps(int[] a)
+  public String checkleaps(int[] a)
   {
     int leaps = 0;
     int steps = 0;
@@ -107,42 +116,49 @@ public class Analysis
     System.out.println("You had " + steps + " steps");
     if(leaps > steps)
     {
-      System.out.println("You should use more stepwise motion in your harmonizing, you had too many leaps in your melody.");
       score = score - 5;
+      return "You should use more stepwise motion in your harmonizing, you had too many leaps in your melody. + ";
     }
     else if(leaps == 0)
     {
-      System.out.println("Unfortunately your melody is rather boring since it only contains stepwise motion.");
+      return "Unfortunately your melody is rather boring since it only contains stepwise motion.";
     }
     else
     {
-      System.out.println("You had a good ratio of leaps to steps.");
       score = score + 5;
+      return "You had a good ratio of leaps to steps.";
+
+
     }
   }
-  public void checkpar(int[] a, int[] b)
+  public String checkpar(int[] a, int[] b)
   {
+    String comments = "";
     for(int i = 0; i < a.length - 1; i++)
     {
       if((a[i] - a[i+1]) == (b[i] - b[i+1]))
       {
         if(Math.abs(a[i] - b[i]) == 0)
         {
-          System.out.println("There is a parrallel unison starting at note " + i);
           score--;
+          comments += ("There is a parrallel unison starting at note " + i + "\n");
+
         }
         if(Math.abs(a[i] - b[i]) == 7)
         {
-          System.out.println("There is a parrallel fifth starting at note " + i);
           score--;
+          comments += ("There is a parrallel fifth starting at note " + i + "\n");
+
         }
         if(Math.abs(a[i] - b[i]) == 12)
         {
-          System.out.println("There is a parrallel octave starting at note " + i);
           score--;
+          comments += ("There is a parrallel octave starting at note " + i + "\n");
+
         }
       }
     }
+    return comments;
   }
   public int converttonum(char x)
   {
