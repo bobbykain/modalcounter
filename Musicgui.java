@@ -20,35 +20,31 @@ public class Musicgui extends Application implements EventHandler<ActionEvent>
 {
   Stage window;
   Button button;
-  double x = 0;
+  double x = 0; //mouse positions
   double y = 0;
-  public static String[] previous = new String[16];
-  String[] current = new String[16];
+  public static String[] previous = new String[16]; //previously played melody
+  String[] current = new String[16]; //current melody
   char octave = '1';
   int index = 0;
-  public static String messenger = "";
+  public static String messenger = ""; //message box for feedback
   boolean ready = false;
   ModalClient client = new ModalClient();
   ModalListener listener;
 
   public static void main(String[] args)
   {
-
-
     launch(args);
-
-
   }
 
   @Override
   public void start(Stage primaryStage) throws Exception
   {
-    for(int i = 0; i < 16;i++)
+    for(int i = 0; i < 16;i++) // fill with blank strings
     {
       previous[i] = " ";
       current[i] = " ";
     }
-    Image image = new Image(new FileInputStream("../modalcounter/background.png"));
+    Image image = new Image(new FileInputStream("../modalcounter/background.png")); //get background image
     ImageView imageView = new ImageView(image);
 
     Group root = new Group(imageView);
@@ -92,20 +88,17 @@ public class Musicgui extends Application implements EventHandler<ActionEvent>
     theThread.start();
 
 
-    imageView.setOnMouseClicked(e -> {
+    imageView.setOnMouseClicked(e -> {  //when the mouse is clicked get x,y and activate corrosponding event
     System.out.println("["+e.getX()+", "+e.getY()+"]");
     x = e.getX();
     y = e.getY();
     selector(x,y);
     String currentString1 = String.join("-", current);
     String previousString1 = String.join("-", previous);
-    previousText.setText(previousString1);
+    previousText.setText(previousString1);  //update all text in scene if necessary
     currentText.setText(currentString1);
     message.setText(messenger);
 
-
-
-    //notes
   });
   window.setScene(scene);
   window.show();
@@ -121,6 +114,8 @@ public class Musicgui extends Application implements EventHandler<ActionEvent>
     String currentString = String.join(" ", current);
     return currentString;
   }
+
+  //deal with all button presses in scene
   public void selector(double x, double y)
   {
     //buttons
